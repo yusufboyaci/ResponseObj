@@ -1,0 +1,62 @@
+﻿@model ResponseObj.Models.ViewModels.AuthorModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>AuthorModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success" type="button" id="btnSave">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    $('#btnSave').click(function() {
+
+        $.ajax({
+            url: 'Post/Save',// Request' in yapılacak URL bilgisi
+            data: {
+                'Name': $('#Name').val(),
+                'LastName': $('#LastName').val(),
+            },
+            type: 'POST',
+            cache: false,// Request'in browser üzerinden cache'lenecek mi
+            success: function(result) {
+                if (result.Result == '@OperationResultType.Success') {
+                    alert(result.message);
+                }
+                else {
+                    alert(result.message);
+                }
+            },
+            Error: function(err) {
+                console.log(err);
+                alert("Hata");
+            }
+        });
+    });
+</script>
+
